@@ -4,6 +4,8 @@ import com.springboot.miscroserice.course.dto.CourseRequestDTO;
 import com.springboot.miscroserice.course.dto.CourseResponseDTO;
 import com.springboot.miscroserice.course.modal.CourseEntity;
 
+import java.util.UUID;
+
 public class AppUtil {
     public static CourseEntity convertRequestToEntity(CourseRequestDTO courseRequestDTO) {
         CourseEntity courseEntity = new CourseEntity();
@@ -31,6 +33,7 @@ public class AppUtil {
         courseResponseDTO.setFees(entity.getFees());
         courseResponseDTO.setCertificateAvailable(entity.isCertificateAvailable());
         courseResponseDTO.setDescription(entity.getDescription());
+        courseResponseDTO.setCourseUniqueCode(UUID.randomUUID().toString().split("-")[0]);
 //        courseResponseDTO.setCourseUniqueCode();
         return courseResponseDTO;
 

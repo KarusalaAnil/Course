@@ -6,6 +6,7 @@ import com.springboot.miscroserice.course.modal.CourseEntity;
 import com.springboot.miscroserice.course.repository.CourseRepository;
 import com.springboot.miscroserice.course.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Service
 public class CourseService {
 
     @Autowired
@@ -22,7 +24,6 @@ public class CourseService {
         CourseEntity courseEntity = AppUtil.convertRequestToEntity(courseRequestDTO);
         CourseEntity entity = courseRepository.save(courseEntity);
         CourseResponseDTO responseDTO = AppUtil.convertEntityToResponse(entity);
-        responseDTO.setCourseUniqueCode(UUID.randomUUID().toString().split("-")[0]);
         return responseDTO;
     }
 
@@ -54,8 +55,12 @@ public class CourseService {
         courseEntity.setCertificateAvailable(courseRequestDTO.isCertificateAvailable());
         courseEntity.setDescription(courseRequestDTO.getDescription());
 
-//        courseRepository
-        return null;
+        /* id we not write this code entity will not update*/
+        CourseEntity entity = courseRepository.save(courseEntity);
+        return AppUtil.convertEntityToResponse(entity);
+    }
 
+    public void removeCourse(int courseId) {
+        courseRepository.deleteById(courseId);
     }
 }
